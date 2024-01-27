@@ -1,7 +1,8 @@
  # BizarreInnovations 🎃
 
  ## Welcome to BizarreInnovations 
-  👉 Where you will be able to find the list  weirdest inventions ever made .
+  👉 Where you will be able to find the list  weirdest inventions ever made . 
+  
   👉 BizarreInnovations is the way you find how innovative and creative the ideas
       have been done in humorous way it has been done and has found many solutions 
       to the problems faced day to day in our life
