@@ -2,7 +2,7 @@
   "name": "s53_weirdestinventions",
   "version": "1.0.0",
   "description": "👉 Where you will be able to find the list  weirdest inventions ever made .",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,5 +14,8 @@
   },
   "bugs": {
     "url": "https://github.com/kalviumcommunity/S53_WeirdestInventions/issues"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
