@@ -1,0 +1,11 @@
+{
+  "name": "s53_weirdestinventions",
+  "version": "1.0.0",
+  "description": "👉 Where you will be able to find the list  weirdest inventions ever made .",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
