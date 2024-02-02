@@ -20,5 +20,5 @@
 
 ### By incorporating these features, BizarreInnovations can be a engaging and dynamic platform that appeals to a wide audience interested in the unconventional and creative side of innovation. 
 
-
+Deployed link - https://weirdest-inventions.onrender.com/
   
