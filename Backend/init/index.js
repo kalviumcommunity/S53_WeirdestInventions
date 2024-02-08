@@ -89,10 +89,10 @@ const inventions = [
       })
     ];
 
-// Invention.insertMany(inventions)
-// .then((data)=>{
-//     console.log("data added successfully ");
-// }).catch((err)=>{
-//     console.log(err);
-// })
+Invention.insertMany(inventions)
+.then((data)=>{
+    console.log("data added successfully ");
+}).catch((err)=>{
+    console.log(err);
+})
   
