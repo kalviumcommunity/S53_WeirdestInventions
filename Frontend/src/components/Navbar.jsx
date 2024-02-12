@@ -2,7 +2,7 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <div className="min-h-screen">
+    <div style={{margin: "0",padding: "0",width: "100%",position: "absolute",top:"0"}}>
       <div className="antialiased bg-gray-500 dark-mode:bg-gray-900">
         <div className="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
           <div x-data="{ open: true }" className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
