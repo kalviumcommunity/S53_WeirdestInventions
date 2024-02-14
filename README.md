@@ -18,7 +18,7 @@
  #### 🤜 Featured Behind the Scences => Highlight inventors and their journeys, providing a deeper understanding of the people behind the bizarre innovations.
  #### 🤜 User reactions => Based on the inventions the user can react to the invention and comment accordingly.
 
-### By incorporating these features, BizarreInnovations can be a engaging and dynamic platform that appeals to a wide audience interested in the unconventional and creative side of innovation. 
+### By incorporating these features, BizarreInnovations can be a engaging and dynamic platform that appeals to a wide audience interested in the unconventional and creative side of innovation
 
 Deployed link - https://weirdest-inventions.onrender.com/
-  
+Deployment Link for Landing Page - https://weirdestinventions.vercel.app/

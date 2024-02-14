@@ -3,8 +3,9 @@ const express = require('express')
 const app = express()
 const Invention = require('./models/inventions')
 require("dotenv").config()
-app.use(express.json())
+const postRouter = express.Router()
 
+postRouter.use(express.json())
 main()
   .then(() => {
     console.log("Connection Successful!");
@@ -15,7 +16,7 @@ async function main(){
     await mongoose.connect(process.env.MONGO_KEY)
 }
 
-app.get("/", async (req,res)=>{
+postRouter.get("/", async (req,res)=>{
     let resData
     await Invention.find().then( (data)=>{
         resData = data
@@ -23,7 +24,7 @@ app.get("/", async (req,res)=>{
     res.send(resData)
 })
 
-app.post("/", async (req,res)=>{
+postRouter.post("/", async (req,res)=>{
     let post = new Invention(req.body)
     await post.save().then((result)=>{
         res.send("Added Successfully 😇")
@@ -32,7 +33,7 @@ app.post("/", async (req,res)=>{
     })
 })
 
-app.put("/:inventionname", async (req, res) => {
+postRouter.put("/:inventionname", async (req, res) => {
     try {
         let { inventionname } = req.params;
         let newData = req.body;
@@ -50,7 +51,7 @@ app.put("/:inventionname", async (req, res) => {
 });
 
 
-app.delete("/", async (req,res)=>{
+postRouter.delete("/", async (req,res)=>{
     let deleteInvention = req.body.inventionName
     // console.log(deleteInvention)
     try{
@@ -66,7 +67,9 @@ app.delete("/", async (req,res)=>{
     }
 })
 
-const port = 3000
-app.listen(port,()=>{
-    console.log(`App is Listening on PORT : ${port}`)
-})
+// const port = 3000
+// app.listen(port,()=>{
+//     console.log(`App is Listening on PORT : ${port}`)
+// })
+
+module.exports = postRouter

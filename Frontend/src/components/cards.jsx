@@ -1,12 +1,12 @@
 import React from 'react';
 
-function Card() {
+function Card({key,img,inventName,desc,comments}) {
     
   return (
     <div className="cards relative flex w-full max-w-[22rem]   flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
       <div className="relative mx-4 mt-4 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
-        <img
-          src="./src/assets/card1.jpeg"
+        <img style={{height:"30vh" , width:"30vw"}}
+          src={img}
           alt="card-1"
         />
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60"></div>
@@ -31,11 +31,13 @@ function Card() {
       <div className="p-6">
         <div className="mb-3 flex items-center justify-between">
           <h5 className="block font-sans text-xl font-medium leading-snug tracking-normal text-blue-gray-900 antialiased">
-          Dynasphere
+          {inventName}
           </h5>
         </div>
-        <p className="block font-sans text-base font-light leading-relaxed text-gray-700 antialiased">
-        an electrically-driven wheel, capable of speeds of 30mph, invented by Mr J. A. Purves of Taunton and his son.
+        <p className="block font-sans text-base font-light leading-relaxed text-gray-700 antialiased bg-white"
+        style={{height:"8vh"}}
+        >
+        {desc}
         </p>
         <div className="group mt-8 inline-flex flex-wrap items-center gap-3">
           {/* Icons */}
@@ -47,7 +49,7 @@ function Card() {
           type="button"
           data-ripple-light="true"
         >
-          Comment
+          comments
         </button>
       </div>
     </div>
