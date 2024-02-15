@@ -1,12 +1,24 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 const mongoose = require("mongoose");
+const postRouter = require('./routes');
 require("dotenv").config()
+
 
 async function main(){
     await mongoose.connect(process.env.MONGO_KEY)
 }
+main()
+.then(()=>{
+    console.log("Database Connected Successfully!");
+})
+.catch((err)=>{
+    console.log(err);
+})
+
+app.use(cors())
 
 console.log(process.env.MONGO_KEY);
 
@@ -15,14 +27,9 @@ app.get('/ping',(req,res)=>{
     res.send("pong")
 })
 app.get('/',(req,res)=>{
-    main()
-.then(()=>{
-    res.send("Database Connected Successfully!");
+    res.send("Root Path")
 })
-.catch((err)=>{
-    res.send(err);
-})
-})
+app.use("/posts",postRouter)
 
 app.listen(3000,()=>{
     console.log("the server is running on port 3000");

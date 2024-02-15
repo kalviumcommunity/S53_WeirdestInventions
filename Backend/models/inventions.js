@@ -1,18 +1,25 @@
 const mongoose = require('mongoose')
 
 const Invention = mongoose.model('Invention',{
+    imgUrl:{
+        type: String,
+        required :true
+    },
     inventionName: {
         type: String,
         required: true
     },
-    yearOfInvention: Number,
-    nameOfInventor: {
+    descriptionOfInvention:{
         type: String,
-        required: true
+        required:true
     },
-    reactions: [],
-    
-    comments: String
+    comments: [{
+        description: String,
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    }],
 })
 
 module.exports = Invention

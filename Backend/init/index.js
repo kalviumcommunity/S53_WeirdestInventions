@@ -18,74 +18,54 @@ main()
 
 const inventions = [
     new Invention ({
-        inventionName: "Pet Rock",
-        yearOfInvention: 1975,
-        nameOfInventor: "Gary Dahl",
-        reactions: ["Confusion", "Amusement"],
-        comments: "A rock as a pet? It's weirdly amusing!"
+        imgUrl: "https://d.newsweek.com/en/full/1652456/dynasphere.png?w=1200&f=aa70fc9c08f08b72a0bfa66c5557d746",
+        inventionName: "Dynasphere",
+        descriptionOfInvention: "an electrically-driven wheel, capable of speeds of 30mph, invented by Mr J. A. Purves of Taunton and his son.",
       }),
       new Invention({
-        inventionName: "Baby Mop",
-        yearOfInvention: 2012,
-        nameOfInventor: "Laura Ryzner",
-        reactions: ["Amusement", "Surprise"],
-        comments: "Babies cleaning the floor while crawling, a unique idea!"
+        imgUrl: "https://photos.prnewswire.com/prnfull/20150210/174636",
+        inventionName: "Selfie Toaster",
+        descriptionOfInvention: "Hammacher Schlemmer , To help liven it up, this toaster from the Vermont Novelty Toaster Corporation released in 2014 is customized using a photo of your face",
       }),
       new Invention({
-        inventionName: "Hula Chair",
-        yearOfInvention: 2008,
-        nameOfInventor: "Turner Broadcasting",
-        reactions: ["Laughter", "Disbelief"],
-        comments: "Exercising with a hula hoop while sitting, really?"
+        imgUrl: "https://t.ly/az7lb",
+        inventionName: "Ostrich Pillow",
+        descriptionOfInvention: "Ostrich Pillow was conceptualized by the European design duo kawamura-ganjavian , the Ostrich Pillow allows the wearer to escape the world by sticking their head into a fluffy hole.",
       }),
       new Invention({
-        inventionName: "Butter Stick",
-        yearOfInvention: 2006,
-        nameOfInventor: "Kristine Steuart",
-        reactions: ["Raised Eyebrows", "Confusion"],
-        comments: "Butter in a stick form, not exactly practical!"
+        imgUrl: "https://homefixated.com/wp-content/uploads/2017/07/Ping-Pong-Table-Door.jpg",
+        inventionName: "Ping-Pong Door",
+        descriptionOfInvention: "Tabias Franzel is the person who created the ping-pong door , Love ping pong but don't have the space? This door converts to a ping pong table with a simple flip of the wrist!",
       }),
       new Invention({
-        inventionName: "Fork with an Umbrella",
-        yearOfInvention: 1992,
-        nameOfInventor: "Unknown",
-        reactions: ["Bafflement", "Amusement"],
-        comments: "An umbrella attached to a fork, for rainy bites!"
+        imgUrl: "https://i.insider.com/512b9dfbeab8ea240a00000b?width=750&format=jpeg&auto=webp",
+        inventionName: "Dogbrella",
+        descriptionOfInvention: "Hammacher Schlemmer the inventor of Dogbrella, this umbrella that mounts to a dog's collar and keeps them dry for walks",
       }),
       new Invention({
-        inventionName: "Pizza Scissors",
-        yearOfInvention: 2004,
-        nameOfInventor: "Kikkerland Design",
-        reactions: ["Practical Jokes", "Surprise"],
-        comments: "Scissors specially designed for cutting pizza slices!"
+        imgUrl: "https://netdna.coolthings.com/wp-content/uploads/2013/04/flasktie1.jpg",
+        inventionName: "Flask Tie",
+        descriptionOfInvention: "The Flask Tie was invented by Steven Anthony, If work is driving you to the bottle, a flask hidden in your tie can do double-duty.",
       }),
       new Invention({
-        inventionName: "Doggles (Dog Goggles)",
-        yearOfInvention: 1997,
-        nameOfInventor: "Roni Cohen",
-        reactions: ["Amusement", "Cuteness Overload"],
-        comments: "Goggles made for dogs, because they need eye protection too!"
+        imgUrl: "https://3.imimg.com/data3/VM/RQ/MY-10119348/boyfriend-arm-pillow.jpg",
+        inventionName: "Boyfriend's Arm Pillow",
+        descriptionOfInvention: "Released in 2008 by the Kameo Corporation, this pillow shaped like an embracing human arm quickly caught on in Japan",
       }),
       new Invention({
-        inventionName: "USB Pet Rock",
-        yearOfInvention: 2007,
-        nameOfInventor: "Unknown",
-        reactions: ["Tech Confusion", "Amusement"],
-        comments: "A USB-powered version of the classic Pet Rock!"
+        imgUrl: "https://qph.cf2.quoracdn.net/main-qimg-d2d8f25e46c581bfc352fa2646a20971-lq",
+        inventionName: "Mass Shaving Machine",
+        descriptionOfInvention: "Invented in the 19th century, the “mass shaving machine” can shave a dozen men at once.",
       }),
       new Invention({
-        inventionName: "Portable Chin Rest for Subway Commuters",
-        yearOfInvention: 2015,
-        nameOfInventor: "Unknown",
-        reactions: ["Practicality Questions", "Laughter"],
-        comments: "A portable chin rest for napping during subway rides!"
+        imgUrl: "https://d.newsweek.com/en/full/1652426/massage-helmet.webp?w=790&f=b673bad9379ca47a1f5ba055cfcafe81",
+        inventionName: "Massage helmet",
+        descriptionOfInvention: "In the 1960s, you didn't need to visit a spa to get a relaxing head massage. You could slip on this massage helmet for an air-powered scalp rubdown.",
       }),
       new Invention({
-        inventionName: "Toilet Paper Roll Hat",
-        yearOfInvention: 2002,
-        nameOfInventor: "Unknown",
-        reactions: ["Amusement", "Confusion"],
-        comments: "A hat made from toilet paper rolls, fashion statement?"
+        imgUrl: "https://i0.wp.com/rayool.wordpress.com/files/2009/10/noodlefan.jpg",
+        inventionName: "Noodle Fan",
+        descriptionOfInvention: "No one wants to burn their mouth with hot food. The inventor Momofuku Ando must have thought a lot about doing good to people, hence, invented this Noodle Fan.",
       })
     ];
 
