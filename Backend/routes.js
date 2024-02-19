@@ -15,14 +15,39 @@ main()
 async function main(){
     await mongoose.connect(process.env.MONGO_KEY)
 }
+const validatePost = (req, res, next) => {
+    let { error } = postValidation.validate(req.body);
+    if (error) {
+      throw new ExpressError(400, error);
+    } else {
+      next();
+    }
+  };
+  
 
 postRouter.get("/", async (req,res)=>{
-    let resData
-    await Invention.find().then( (data)=>{
+    let resData;
+    await Invention.find().then((data)=>{
         resData = data
     })
     res.send(resData)
 })
+
+postRouter.get("/:id",async (req,res) => {
+    try {
+        const { id } = req.params;
+        const invention = await Invention.findById(id);
+
+        if (!invention) {
+            return res.status(404).send("Invention not found");
+        }
+
+        res.json(invention);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+});
 
 postRouter.post("/", async (req,res)=>{
     let post = new Invention(req.body)
@@ -33,22 +58,38 @@ postRouter.post("/", async (req,res)=>{
     })
 })
 
-postRouter.put("/:inventionname", async (req, res) => {
-    try {
-        let { inventionname } = req.params;
-        let newData = req.body;
+// postRouter.put("/:inventionname", async (req, res) => {
+//     try {
+//         let { inventionname } = req.params;
+//         let newData = req.body;
 
-        let result = await Invention.findOneAndUpdate({ inventionName: inventionname }, newData);
+//         let result = await Invention.findOneAndUpdate({ inventionName: inventionname }, newData);
 
-        if (result === null || result === undefined) {
-            res.status(404).send("invention not found");
-        } else {
-            res.send("Updated Successfully😎");
-        }
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
+//         if (result === null || result === undefined) {
+//             res.status(404).send("invention not found");
+//         } else {
+//             res.send("Updated Successfully😎");
+//         }
+//     } catch (err) {
+//         res.status(500).send(err.message);
+//     }
+// });
+
+postRouter.put(
+    "/:id",
+    (async (req, res) => {
+      let { id } = req.params;
+      let newData = req.body;
+        console.log(id,newData)
+      let result = await Invention.findByIdAndUpdate(id, newData);
+  
+      if (result === null || result === undefined) {
+        throw new ExpressError(404, "Post not found..!");
+      } else {
+        res.send("UPDATED");
+      }
+    })
+  );
 
 
 postRouter.delete("/", async (req,res)=>{
@@ -58,7 +99,7 @@ postRouter.delete("/", async (req,res)=>{
         let result = await Invention.deleteOne({inventionName:deleteInvention})
         // console.log(result)
         if (result.deletedCount==0){
-            res.status(404).send("User not found..!")
+            res.status(404).send("data not found..!")
         }else{
             res.send("Invention Deleted")
         }
