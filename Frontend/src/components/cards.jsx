@@ -1,7 +1,25 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+function Card({img,inventName,desc,comments, id}) {
+  const navigate = useNavigate();
+  const editPost = () => {
+    navigate(`/editpost/${id}`)
+  }
+  const API_URL = "http://localhost:3000/posts"
+  const handleDelete = () => {
+    axios.delete(API_URL, { data: { inventionName: inventName } })
+        .then((response) => {
+            console.log(response.data); // Log the response data to check the server's response
+            navigate('/listings');
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+        });
+};
 
-function Card({key,img,inventName,desc,comments}) {
-    
+
+
   return (
     <div className="cards relative flex w-full max-w-[22rem]   flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
       <div className="relative mx-4 mt-4 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
@@ -35,7 +53,7 @@ function Card({key,img,inventName,desc,comments}) {
           </h5>
         </div>
         <p className="block font-sans text-base font-light leading-relaxed text-gray-700 antialiased bg-white"
-        style={{height:"8vh"}}
+        style={{height:"9vh"}}
         >
         {desc}
         </p>
@@ -44,6 +62,7 @@ function Card({key,img,inventName,desc,comments}) {
         </div>
       </div>
       <div className="p-6 pt-3">
+      
         <button
           className="block w-full select-none rounded-lg bg-pink-500 py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           type="button"
@@ -51,6 +70,11 @@ function Card({key,img,inventName,desc,comments}) {
         >
           comments
         </button>
+
+
+        <button style={{marginRight:"6vh", marginTop:"1vh"}} className="btn btn-info" onClick={editPost}>EDIT</button>
+        <button className="btn btn-error" onClick={handleDelete}>DELETE</button>
+      
       </div>
     </div>
 
