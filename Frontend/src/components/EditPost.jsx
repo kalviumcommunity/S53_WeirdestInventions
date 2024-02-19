@@ -88,7 +88,8 @@ const EditPost = () => {
                             </label>
                         </div>
                     </div>
-                   
+
+
 
                     <button
                        
