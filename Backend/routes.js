@@ -145,26 +145,23 @@ postRouter.delete("/", async (req,res)=>{
     }
   })
 
- postRouter.post("/login",validateUser,async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const user = await User.findOne({ email })
-        .then((data)=>{
-            if (password != data.password) {
-                return res.status(401).json({ message: 'Invalid password' });
-              }else{
-                res.status(200).json({ message: 'Login successful' });
-            }
-        })
-        .catch((err)=>{
-        return res.status(401).json({ message: 'Invalid email' });
-        })
-      
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
+ postRouter.post(
+    "/login",
+    async (req, res) => {
+      let { email, password } = req.body;
+      let result = await User.find({ email: email });
+      if (result.length == 0) {
+        throw new Error("User not found!");
+      } else {
+        let savedPassword = result[0].password;
+        if (savedPassword != password) {
+          throw new Error("Wrong Password");
+        } else {
+          res.send("LOGGED IN");
+        }
+      }
     }
-  })
+  );
 
 module.exports = postRouter
 

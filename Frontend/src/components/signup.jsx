@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { setCookie } from '../utils/cookies';
+import { AppContext } from './Context';
+
 
 const Signup = () => {
     const [fullname, setfullname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
+    const {login, setLogin} = useContext(AppContext)
 
     const handleValidation = () => {
         const errors = {};
@@ -31,7 +35,10 @@ const Signup = () => {
                     fullname,
                     email,
                     password
-                });
+                }).then(()=>{
+                    setCookie("username",data.username,365)
+                    setLogin(loginCheck())
+                })
                 console.log('Response:', response.data);
                 // Redirect or perform any other actions upon successful registration
             } catch (error) {
