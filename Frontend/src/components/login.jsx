@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+// import { AppContext } from './Context';
+
 
 const Login = () => {
+// const {login, setLogin} = useContext(AppContext)
   const [formData, setFormData] = useState({
-    fullname: '',
     email: '',
     password: ''
   });
@@ -17,15 +19,24 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/posts/login', {
-        fullname: formData.fullname,
         email: formData.email,
         password: formData.password
-      });
-      console.log('Response:', response.data); // Handle response as needed
+        
+      })
+     document.cookie = `email=${formData.email}`
+     document.cookie = `auth-token=${response.data.token}`
+     setTimeout(function() {
+        window.location = "/"
+      }, 0);
+      
+    console.log('Response:', response); // Handle response as needed
     } catch (error) {
       console.error('Error:', error); // Handle error appropriately
     }
   };
+
+
+  
 
   return (
     <>
