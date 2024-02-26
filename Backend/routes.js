@@ -6,6 +6,7 @@ const Invention = require('./models/inventions')
 const User = require('./models/user')
 require("dotenv").config()
 const postRouter = express.Router()
+var jwt = require("jsonwebtoken");
 
 
 // Define Joi schema for validation
@@ -23,6 +24,21 @@ const signupValidationSchema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(8).required()
   });
+
+//   const jwtVerify = (req, res, next) => {
+//     try {
+//       console.log(req.headers);
+//       let { authorization } = req.headers;
+//       let result = jwt.verify(authorization, process.env.JWT_PASS);
+//       console.log(result.username);
+//       next();
+//     } catch (err) {
+//       throw new ExpressError(
+//         403,
+//         "Not authorised to access this route without correct auth token"
+//       );
+//     }
+//   };
 
 postRouter.use(express.json())
 main()
@@ -79,7 +95,7 @@ postRouter.get("/:id",async (req,res) => {
     }
 });
 
-postRouter.post("/", validatePost, async (req,res)=>{ 
+postRouter.post("/", validatePost,async (req,res)=>{ 
     let post = new Invention(req.body)
     await post.save().then((result)=>{
         res.send("Added Successfully 😇")
@@ -157,7 +173,13 @@ postRouter.delete("/", async (req,res)=>{
         if (savedPassword != password) {
           throw new Error("Wrong Password");
         } else {
-          res.send("LOGGED IN");
+            const token = jwt.sign({ result: result._id }, `${process.env.SECURITY_KEY}`, { expiresIn: '7d' });
+
+            // Set the JWT token as a cookie
+            res.cookie('authToken', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, path: '/' });
+            
+            res.status(200).json({message:'Logged in',token});
+
         }
       }
     }

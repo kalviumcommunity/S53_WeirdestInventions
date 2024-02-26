@@ -1,13 +1,11 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { loginCheck } from '../utils/logincheck';
-import { AppContext } from './Context';
-import { setCookie } from '../utils/cookies';
+// import { AppContext } from './Context';
 
 
 const Login = () => {
-const {login, setLogin} = useContext(AppContext)
+// const {login, setLogin} = useContext(AppContext)
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -23,11 +21,15 @@ const {login, setLogin} = useContext(AppContext)
       const response = await axios.post('http://localhost:3000/posts/login', {
         email: formData.email,
         password: formData.password
-      }).then(()=>{
-        setCookie("email",formData.email,365)
-        setLogin(loginCheck())
-    })
-    console.log('Response:', formData); // Handle response as needed
+        
+      })
+     document.cookie = `email=${formData.email}`
+     document.cookie = `auth-token=${response.data.token}`
+     setTimeout(function() {
+        window.location = "/"
+      }, 0);
+      
+    console.log('Response:', response); // Handle response as needed
     } catch (error) {
       console.error('Error:', error); // Handle error appropriately
     }

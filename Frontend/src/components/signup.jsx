@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { setCookie } from '../utils/cookies';
-import { AppContext } from './Context';
+// import { AppContext } from './Context';
 
 
 const Signup = () => {
@@ -35,9 +33,6 @@ const Signup = () => {
                     fullname,
                     email,
                     password
-                }).then(()=>{
-                    setCookie("username",data.username,365)
-                    setLogin(loginCheck())
                 })
                 console.log('Response:', response.data);
                 // Redirect or perform any other actions upon successful registration

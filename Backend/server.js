@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const cookieparser = require('cookie-parser')
 
 const mongoose = require("mongoose");
 const postRouter = require('./routes');
@@ -19,6 +20,7 @@ main()
 })
 
 app.use(cors())
+app.use(cookieparser())
 
 console.log(process.env.MONGO_KEY);
 
