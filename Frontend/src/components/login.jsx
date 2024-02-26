@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { AppContext } from './Context';
-import { setCookie } from '../utils/cookies';
+import { setCookie } from '../utils/cookies'; //added this for cookiees
 
 
 const Login = () => {

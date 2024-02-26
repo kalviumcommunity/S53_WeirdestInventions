@@ -1,4 +1,4 @@
-import { getCookie } from "./cookies"
+import { getCookie } from "./cookies" //to check the login page
 
 export function loginCheck(){
     const username = getCookie("username")
