@@ -1,9 +1,28 @@
 const mongoose = require('mongoose')
 const express = require('express')
+const Joi = require('joi') // Import Joi for validation
 const app = express()
 const Invention = require('./models/inventions')
+const User = require('./models/user')
 require("dotenv").config()
 const postRouter = express.Router()
+
+
+// Define Joi schema for validation
+const postValidationSchema = Joi.object({
+  // Define your validation rules here
+  // Example: 
+  inventionName: Joi.string().min(5).required(),
+  descriptionOfInvention: Joi.string().required(),
+  imgUrl: Joi.string().uri().required() // Require a valid URL for image
+  // Add more properties as needed
+});
+
+const signupValidationSchema = Joi.object({
+    fullname: Joi.string().min(5).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(8).required()
+  });
 
 postRouter.use(express.json())
 main()
@@ -14,16 +33,27 @@ main()
   
 async function main(){
     await mongoose.connect(process.env.MONGO_KEY)
-}
-const validatePost = (req, res, next) => {
-    let { error } = postValidation.validate(req.body);
+} 
+
+const validateUser = (req, res, next) => {
+    const { error } = signupValidationSchema.validate(req.body);
     if (error) {
-      throw new ExpressError(400, error);
+      // Return a 400 error if validation fails
+      return res.status(400).send(error.details[0].message);
     } else {
       next();
     }
-  };
-  
+}; 
+
+const validatePost = (req, res, next) => {
+    const { error } = postValidationSchema.validate(req.body);
+    if (error) {
+      // Return a 400 error if validation fails
+      return res.status(400).send(error.details[0].message);
+    } else {
+      next();
+    }
+};
 
 postRouter.get("/", async (req,res)=>{
     let resData;
@@ -49,7 +79,7 @@ postRouter.get("/:id",async (req,res) => {
     }
 });
 
-postRouter.post("/", async (req,res)=>{
+postRouter.post("/", validatePost, async (req,res)=>{ 
     let post = new Invention(req.body)
     await post.save().then((result)=>{
         res.send("Added Successfully 😇")
@@ -58,59 +88,105 @@ postRouter.post("/", async (req,res)=>{
     })
 })
 
-// postRouter.put("/:inventionname", async (req, res) => {
-//     try {
-//         let { inventionname } = req.params;
-//         let newData = req.body;
+postRouter.put("/:id", validatePost, async (req, res) => { 
+    try {
+        const { id } = req.params;
+        const newData = req.body;
 
-//         let result = await Invention.findOneAndUpdate({ inventionName: inventionname }, newData);
+        const result = await Invention.findByIdAndUpdate(id, newData);
 
-//         if (result === null || result === undefined) {
-//             res.status(404).send("invention not found");
-//         } else {
-//             res.send("Updated Successfully😎");
-//         }
-//     } catch (err) {
-//         res.status(500).send(err.message);
-//     }
-// });
+        if (!result) {
+            return res.status(404).send("Invention not found");
+        }
 
-postRouter.put(
-    "/:id",
-    (async (req, res) => {
-      let { id } = req.params;
-      let newData = req.body;
-        console.log(id,newData)
-      let result = await Invention.findByIdAndUpdate(id, newData);
-  
-      if (result === null || result === undefined) {
-        throw new ExpressError(404, "Post not found..!");
-      } else {
         res.send("UPDATED");
-      }
-    })
-  );
-
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+});
 
 postRouter.delete("/", async (req,res)=>{
     let deleteInvention = req.body.inventionName
-    // console.log(deleteInvention)
     try{
         let result = await Invention.deleteOne({inventionName:deleteInvention})
-        // console.log(result)
-        if (result.deletedCount==0){
-            res.status(404).send("data not found..!")
-        }else{
+        if (result.deletedCount === 0){
+            res.status(404).send("Data not found..!")
+        } else {
             res.send("Invention Deleted")
         }
-    }catch{
+    } catch(err) {
+        console.error(err);
         res.status(500).send(err.message)
     }
 })
 
-// const port = 3000
-// app.listen(port,()=>{
-//     console.log(`App is Listening on PORT : ${port}`)
-// })
+ postRouter.post("/signup" ,validateUser,async (req, res) => {
+    const { fullname,email, password } = req.body;
+  
+    try {
+      // Check if the username already exists
+      const existingUser = await User.findOne({ email });
+  
+      if (existingUser) {
+        return res.json({ message: 'email already exists' });
+      }
+      const newUser = new User({
+        fullname,
+        email,
+        password,
+      });
+  
+      await newUser.save();
+  
+      res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  })
+
+ postRouter.post("/login",validateUser,async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email })
+        .then((data)=>{
+            if (password != data.password) {
+                return res.status(401).json({ message: 'Invalid password' });
+              }else{
+                res.status(200).json({ message: 'Login successful' });
+            }
+        })
+        .catch((err)=>{
+        return res.status(401).json({ message: 'Invalid email' });
+        })
+      
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  })
 
 module.exports = postRouter
+
+// const signupHandler = async (req, res) => {
+//     const { username, password } = req.body;
+  
+//     try {
+//       // Check if the username already exists
+//       const existingUser = await User.findOne({ username });
+  
+//       if (existingUser) {
+//         return res.json({ message: 'Username already exists' });
+//       }
+//       const newUser = new User({
+//         username,
+//         password,
+//       });
+  
+//       await newUser.save();
+  
+//       res.status(201).json({ message: 'User registered successfully' });
+//     } catch (error) {
+//       res.status(500).json({ message: 'Internal Server Error' });
+//     }
+//   };
