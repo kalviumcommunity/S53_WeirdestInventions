@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { loginCheck } from '../utils/logincheck';
 import { AppContext } from './Context';
 import { setCookie } from '../utils/cookies';
 
