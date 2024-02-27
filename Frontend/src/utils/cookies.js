@@ -1,5 +1,4 @@
 export function getCookie(cookieName) {
-    // Construct the name of the cookie to search for
     const name = cookieName + "=";
     
     // Decode and split the document.cookie string into an array of individual cookies
