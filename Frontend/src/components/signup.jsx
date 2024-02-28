@@ -8,7 +8,7 @@ const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
-    const {login, setLogin} = useContext(AppContext)
+    // const {login, setLogin} = useContext(AppContext)
 
     const handleValidation = () => {
         const errors = {};
@@ -29,7 +29,7 @@ const Signup = () => {
         e.preventDefault();
         if (handleValidation()) {
             try {
-                const response = await axios.post('http://localhost:3000/posts/signup', {
+                const response = await axios.post('https://weirdest-inventions.onrender.com/posts/signup', {
                     fullname,
                     email,
                     password

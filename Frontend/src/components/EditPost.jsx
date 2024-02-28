@@ -2,48 +2,61 @@ import React, { useState,useEffect } from "react";
 import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { getCookie } from "../utils/cookies";
+
 const EditPost = () => {
     const { setValue } = useForm();
-
+    const email = getCookie("email")
+    console.log(email);
     const navigate = useNavigate()
     const [newPost, setNewPost] = useState({
         imgUrl: "",
         inventionName: "",
-        descriptionOfInvention: ""
+        descriptionOfInvention: "",
+        email:email
     });
 
     const {id}  = useParams()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(id)
         try {
-            const response = await axios.put(`http://localhost:3000/posts/${id}`, newPost);
+            const response = await axios.put(`http://localhost:3000/posts/update/${id}`, newPost);
             console.log(response.data);
             navigate('/listings');
-        } catch (error) {
-            console.error('Error fetching :', error);
-        }
+          } catch (error) {
+            console.error('Error fetching:', error);
+          }
+          
     };
     // console.log(newPost.id);
 
     useEffect(() => {
         axios
-        .get(`http://localhost:3000/posts/${id}`)
+        .get(`http://localhost:3000/posts/data/${id}`)
           .then((res) => {
             console.log(res.data);
-            setNewPost(res.data);
-            setValue("imgUrl", res.data.imgUrl);
-            setValue("inventionName", res.data.inventionName);
-            setValue("descriptionOfInvention", res.data.descriptionOfInvention);
+            const { imgUrl, inventionName, descriptionOfInvention } = res.data;
+            setNewPost({
+              imgUrl: imgUrl || "",
+              inventionName: inventionName || "",
+              descriptionOfInvention: descriptionOfInvention || "",
+              email: email
+            });
+            setValue("imgUrl", imgUrl || "");
+            setValue("inventionName", inventionName || "");
+            setValue("descriptionOfInvention", descriptionOfInvention || "");
           })
           .catch((err) => {
             console.log(err);
-            if (err.response.data === "Post not found..!") {
+            if (err.response && err.response.data === "Post not found..!") {
+              // Handle post not found error
             } else {
               console.log("error");
             }
           });
-      }, [id, setValue]);
+      }, [id, setValue, email]);
     
     return (
 

@@ -9,24 +9,25 @@ import AddPost from './components/AddPost'
 import EditPost from './components/EditPost'
 import Signup from './components/signUp'
 import Login from './components/login'
+import Posts from './components/Posts'
+
 function App() {
 
 
   return (
     <><div className='tab'>
       <Navbar/>
-      <Routes>Z
+      <Routes>
         <Route element={<Home/>}  path="/" />
         <Route element={<Listings/>}  path="/listings" />
         <Route element={<AddPost/>}  path="/addpost" />
         <Route element={<EditPost/>}  path="/editpost/:id" />
         <Route element={<Signup/>}  path="/signup" />
         <Route element={<Login/>}  path="/login" />
-
+        <Route element={<Posts/>}  path="/posts" />
+    
+        
       </Routes>
-      
-      
-      
       
     </div>
     </>

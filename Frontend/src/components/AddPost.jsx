@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../utils/cookies";
 const AddPost = () => {
     const navigate = useNavigate()
+    const email = getCookie("email")
+    console.log(email);
     const [newPost, setNewPost] = useState({
         imgUrl: "",
         inventionName: "",
-        descriptionOfInvention: ""
+        descriptionOfInvention: "",
+        email:email,
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/posts', newPost);
+            const response = await axios.post('http://localhost:3000/posts/addpost', newPost);
             console.log(response.data);
             navigate('/listings');
         } catch (error) {

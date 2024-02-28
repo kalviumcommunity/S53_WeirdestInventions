@@ -20,6 +20,10 @@ const Invention = mongoose.model('Invention',{
             ref: "User"
         }
     }],
+    email:{
+        type: String,
+        required:true
+    },
 })
 
 module.exports = Invention
