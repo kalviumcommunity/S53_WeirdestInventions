@@ -15,8 +15,9 @@ const postValidationSchema = Joi.object({
   // Example: 
   inventionName: Joi.string().min(5).required(),
   descriptionOfInvention: Joi.string().required(),
-  imgUrl: Joi.string().uri().required() // Require a valid URL for image
+  imgUrl: Joi.string().uri().required(), // Require a valid URL for image
   // Add more properties as needed
+  email: Joi.string().required()
 });
 
 const signupValidationSchema = Joi.object({
@@ -39,6 +40,7 @@ const signupValidationSchema = Joi.object({
 //       );
 //     }
 //   };
+
 
 postRouter.use(express.json())
 main()
@@ -71,7 +73,7 @@ const validatePost = (req, res, next) => {
     }
 };
 
-postRouter.get("/", async (req,res)=>{
+postRouter.get("/data", async (req,res)=>{
     let resData;
     await Invention.find().then((data)=>{
         resData = data
@@ -79,7 +81,7 @@ postRouter.get("/", async (req,res)=>{
     res.send(resData)
 })
 
-postRouter.get("/:id",async (req,res) => {
+postRouter.get("/data/:id",async (req,res) => {
     try {
         const { id } = req.params;
         const invention = await Invention.findById(id);
@@ -95,7 +97,7 @@ postRouter.get("/:id",async (req,res) => {
     }
 });
 
-postRouter.post("/", validatePost,async (req,res)=>{ 
+postRouter.post("/addpost", validatePost,async (req,res)=>{ 
     let post = new Invention(req.body)
     await post.save().then((result)=>{
         res.send("Added Successfully 😇")
@@ -104,11 +106,11 @@ postRouter.post("/", validatePost,async (req,res)=>{
     })
 })
 
-postRouter.put("/:id", validatePost, async (req, res) => { 
+postRouter.put("/update/:id", validatePost, async (req, res) => { 
     try {
-        const { id } = req.params;
+        const  id  = req.params.id;
         const newData = req.body;
-
+        
         const result = await Invention.findByIdAndUpdate(id, newData);
 
         if (!result) {
@@ -122,7 +124,7 @@ postRouter.put("/:id", validatePost, async (req, res) => {
     }
 });
 
-postRouter.delete("/", async (req,res)=>{
+postRouter.delete("/delete", async (req,res)=>{
     let deleteInvention = req.body.inventionName
     try{
         let result = await Invention.deleteOne({inventionName:deleteInvention})
@@ -185,27 +187,32 @@ postRouter.delete("/", async (req,res)=>{
     }
   );
 
+ postRouter.get("/users/data",async (req, res)=> {
+
+    try {
+      const data = await User.find();
+      res.json(data);
+    } catch (error) {
+      console.error('Error reading data from the database:', error);
+      res.status(500).json({ error: 'Failed to retrieve data from the database' });
+    }
+  
+  });
+
+  postRouter.get("/api/:email",async (req, res) => {
+    try {
+      const email = req.params.email
+      const record = await Invention.find({ email });
+      if (!record) {
+        throw new Error('Record not found');
+      }
+  
+      res.json({ record });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to retrieve the record from the database' });
+    }
+  });
+
 module.exports = postRouter
 
-// const signupHandler = async (req, res) => {
-//     const { username, password } = req.body;
-  
-//     try {
-//       // Check if the username already exists
-//       const existingUser = await User.findOne({ username });
-  
-//       if (existingUser) {
-//         return res.json({ message: 'Username already exists' });
-//       }
-//       const newUser = new User({
-//         username,
-//         password,
-//       });
-  
-//       await newUser.save();
-  
-//       res.status(201).json({ message: 'User registered successfully' });
-//     } catch (error) {
-//       res.status(500).json({ message: 'Internal Server Error' });
-//     }
-//   };
+

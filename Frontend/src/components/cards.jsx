@@ -2,11 +2,13 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 function Card({img,inventName,desc,comments, id}) {
+  console.log(id)
+
   const navigate = useNavigate();
   const editPost = () => {
     navigate(`/editpost/${id}`)
   }
-  const API_URL = "http://localhost:3000/posts"
+  const API_URL = "http://localhost:3000/posts/delete"
   const handleDelete = () => {
     axios.delete(API_URL, { data: { inventionName: inventName } })
         .then((response) => {

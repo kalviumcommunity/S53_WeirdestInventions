@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 function Listings() {
   const[data, setData] = useState("")
     useEffect(()=>{
-      axios.get("https://weirdest-inventions.onrender.com/posts").then((res)=>{
+      axios.get("http://localhost:3000/posts/data").then((res)=>{
         setData(res.data)
         console.log(res.data)
     }).catch((err)=>{
@@ -19,9 +19,9 @@ function Listings() {
       <div className='listings-parent'>
       {data.length!=0 && data.map((e,i) => (
         <Card key= {i} img={e.imgUrl} inventName={e.inventionName} desc={e.descriptionOfInvention} comments={e.comments} id={e._id}/>
-      ))}
+        ))}
 
-      <div>
+      <div > 
         <Link
           style={{marginRight:"10"}}
           to="/addpost"

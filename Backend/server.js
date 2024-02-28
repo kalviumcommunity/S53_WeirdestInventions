@@ -18,10 +18,10 @@ main()
 .catch((err)=>{
     console.log(err);
 })
-
+app.use(express.json())
 app.use(cors())
 app.use(cookieparser())
-
+app.use("/posts",postRouter)
 console.log(process.env.MONGO_KEY);
 
 
@@ -31,7 +31,6 @@ app.get('/ping',(req,res)=>{
 app.get('/',(req,res)=>{
     res.send("Root Path")
 })
-app.use("/posts",postRouter)
 
 app.listen(3000,()=>{
     console.log("the server is running on port 3000");
